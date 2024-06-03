@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Home from './components/Home';
+import { useAuth0 } from '@auth0/auth0-react';
+import LoginButton from './components/Login';
+import LogoutButton from './components/Logout';
+import './components/App.css';
 
 function App() {
+  const { isAuthenticated } = useAuth0();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className="header">
+        {isAuthenticated ? <LogoutButton /> : <LoginButton />}
       </header>
+      <div className="main-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </div>
     </div>
   );
 }
